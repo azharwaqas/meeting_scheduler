@@ -1,41 +1,47 @@
 require 'time'
-require 'rspec/autorun'
-
 class MeetingScheduler
-	
-	
+
+	def initialize()
+		@start_time = Time.parse("9:00")
+		@end_time = Time.parse("17:00")
+	end
+
+	def meet(data)
+		@scheduler = []
+		if check_for_off_site_on_site_meeting(data)
+			on_site = true
+			data = data.partition { |element| element[:type].match /^onsite$/ }.flatten
+			parse_meeting(data, on_site, @scheduler)
+		elsif check_for_extend_start_past_offsite(data)
+			on_site = false
+			parse_meeting(data, on_site, @scheduler)
+		else
+			on_site = true
+			parse_meeting(data, on_site, @scheduler)
+		end
+		return @scheduler
+	end
+
+	private
+
 	def check_for_off_site_on_site_meeting(data)
 		@values = data.map{|x| x[:type]}
-		if @values.include?(:onsite) && @values.include?(:offsite)
-			return true
-		else
-			return false
-		end
+		@values.include?(:onsite) && @values.include?(:offsite) ? true :  false
 	end
-	
+
 	def check_for_extend_start_past_offsite(data)
 		@values = data.map{|x| x[:type]}
-		if @values.include?(:onsite)
-			return false
-		else
-			return true
-		end
+		@values.include?(:onsite) ?  false :  true
 	end
-	
+
 	def set_meeting_data(scheduler, meeting, start_time, end_time)
 		@meeting_end_time = start_time + (meeting[:duration].to_f * 3600)
-		if @meeting_end_time <= end_time
-			scheduler << "#{start_time.strftime("%I:%M %p")}" + " - " + "#{@meeting_end_time.strftime("%I:%M %p")}" + " "+  "#{meeting[:name]}"
-		end
+		scheduler << "#{start_time.strftime("%I:%M %p")}" + " - " + "#{@meeting_end_time.strftime("%I:%M %p")}" + " "+  "#{meeting[:name]}" if @meeting_end_time <= end_time
 	end
-	
-	
-	def parse_meeting(data, on_site)
-		@start_time = Time.parse("9:00:00")
-		@end_time = Time.parse("17:00:00")
+
+	def parse_meeting(data, on_site, scheduler)
 		off_site = false
-		@scheduler = []
-		
+    @scheduler = scheduler
 		if on_site
 			data.each do |meeting|
 				if  @start_time < @end_time
@@ -61,93 +67,13 @@ class MeetingScheduler
 		end
 
 		if data.count == @scheduler.count
-			puts "Yes, can fit. One possible solution would be:"
+			@scheduler.unshift("Yes, can fit. One possible solution would be:")
 			@scheduler.map {|schedule| puts schedule}
-			return true
+			return @schudler
 		else
-			puts "No, can’t fit!"
-			return false
+			@scheduler.unshift("No, Can't fit!")
+			puts @scheduler.first
 		end
 	end
-	
 
-	def meet(data)
-		if check_for_off_site_on_site_meeting(data)
-			on_site = true
-			data = data.partition { |element| element[:type].match /^onsite$/ }.flatten
-			parse_meeting(data, on_site)
-		elsif check_for_extend_start_past_offsite(data)
-			on_site = false
-			parse_meeting(data, on_site)
-		else
-			on_site = true
-			parse_meeting(data, on_site)
-		end
-	end
-	
-	
 end
-
-data = [
-	{ name: "Meeting 1", duration: 3, type: :onsite },
-	{ name: "Meeting 2", duration: 2, type: :offsite },
-	{ name: "Meeting 3", duration: 1, type: :offsite },
-	{ name: "Meeting 4", duration: 0.5, type: :onsite }
-	]
-	
-data1 = 
-[
-{ name: "Meeting 1", duration: 1.5, type: :onsite },
-{ name: "Meeting 2", duration: 2, type: :offsite },
-{ name: "Meeting 3", duration: 1, type: :onsite },
-{ name: "Meeting 4", duration: 1, type: :offsite },
-{ name: "Meeting 5", duration: 1, type: :offsite }
-]
-
-data2 =
-[
-{ name: "Meeting 1", duration: 4, type: :offsite },
-{ name: "Meeting 2", duration: 4, type: :offsite }
-]
-
-data3 = 
-[
-{ name: "Meeting 1", duration: 0.5, type: :offsite },
-{ name: "Meeting 2", duration: 0.5, type: :onsite },
-{ name: "Meeting 3", duration: 2.5, type: :offsite },
-{ name: "Meeting 4", duration: 3, type: :onsite }
-]
-
-data4 = [
-{ name: "Meeting 1", duration: 4, type: :offsite },
-{ name: "Meeting 2", duration: 3.5, type: :offsite }
-]
-	
-
-@meeting = MeetingScheduler.new
-
-@meet = @meeting.meet(data)
-
-
-
-describe MeetingScheduler do
-  it "it should return true" do
-    @meeting = MeetingScheduler.new
-    expect(@meeting.meet(data)).to eq(true) # first data set in document
-    expect(@meeting.meet(data1)).to eq(true) # second data set in document
-    expect(@meeting.meet(data3)).to eq(true) # fourth data set in document
-    expect(@meeting.meet(data4)).to eq(true) #additonal test case
-  end
-  
-  it "it should return false" do
-  	@meeting = MeetingScheduler.new
-  	expect(@meeting.meet(data2)).to eq(false) # third data set in document
-  end
-end
-
-
-
-
-
-
-#schedule_meeting(data)
