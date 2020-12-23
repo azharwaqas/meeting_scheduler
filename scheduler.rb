@@ -1,13 +1,13 @@
 require 'time'
 class MeetingScheduler
 
-	def initialize()
+	def initialize(start_time, end_time)
 		@start_time = Time.parse("9:00")
 		@end_time = Time.parse("17:00")
+		@scheduler = []
 	end
 
 	def meet(data)
-		@scheduler = []
 		if check_for_off_site_on_site_meeting(data)
 			on_site = true
 			data = data.partition { |element| element[:type].match /^onsite$/ }.flatten
@@ -41,7 +41,7 @@ class MeetingScheduler
 
 	def parse_meeting(data, on_site, scheduler)
 		off_site = false
-    @scheduler = scheduler
+		@scheduler = scheduler
 		if on_site
 			data.each do |meeting|
 				if  @start_time < @end_time
