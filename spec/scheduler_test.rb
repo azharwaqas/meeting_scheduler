@@ -3,57 +3,58 @@ require 'time'
 require 'rspec/autorun'
 
 day1 =
-[
-	{ name: "Meeting 1", duration: 3, type: :onsite },
-	{ name: "Meeting 2", duration: 2, type: :offsite },
-	{ name: "Meeting 3", duration: 1, type: :offsite },
-	{ name: "Meeting 4", duration: 0.5, type: :onsite }
-]
-	
+  [
+    { name: "Meeting 1", duration: 3, type: :onsite },
+    { name: "Meeting 2", duration: 2, type: :offsite },
+    { name: "Meeting 3", duration: 1, type: :offsite },
+    { name: "Meeting 4", duration: 0.5, type: :onsite }
+  ]
+
 day2 = 
-[
-	{ name: "Meeting 1", duration: 1.5, type: :onsite },
-	{ name: "Meeting 2", duration: 2, type: :offsite },
-	{ name: "Meeting 3", duration: 1, type: :onsite },
-	{ name: "Meeting 4", duration: 1, type: :offsite },
-	{ name: "Meeting 5", duration: 1, type: :offsite }
-]
+  [
+    { name: "Meeting 1", duration: 1.5, type: :onsite },
+    { name: "Meeting 2", duration: 2, type: :offsite },
+    { name: "Meeting 3", duration: 1, type: :onsite },
+    { name: "Meeting 4", duration: 1, type: :offsite },
+    { name: "Meeting 5", duration: 1, type: :offsite }
+  ]
 
 day3 =
-[
-	{ name: "Meeting 1", duration: 4, type: :offsite },
-	{ name: "Meeting 2", duration: 4, type: :offsite }
-]
+  [
+    { name: "Meeting 1", duration: 4, type: :offsite },
+    { name: "Meeting 2", duration: 4, type: :offsite }
+  ]
 
 day4 = 
-[
-	{ name: "Meeting 1", duration: 0.5, type: :offsite },
-	{ name: "Meeting 2", duration: 0.5, type: :onsite },
-	{ name: "Meeting 3", duration: 2.5, type: :offsite },
-	{ name: "Meeting 4", duration: 3, type: :onsite }
-]
+  [
+    { name: "Meeting 1", duration: 0.5, type: :offsite },
+    { name: "Meeting 2", duration: 0.5, type: :onsite },
+    { name: "Meeting 3", duration: 2.5, type: :offsite },
+    { name: "Meeting 4", duration: 3, type: :onsite }
+  ]
 
-day5 = [
-	{ name: "Meeting 1", duration: 4, type: :offsite },
-	{ name: "Meeting 2", duration: 3.5, type: :offsite }
-]
+day5 =
+  [
+    { name: "Meeting 1", duration: 4, type: :offsite },
+    { name: "Meeting 2", duration: 3.5, type: :offsite }
+  ]
 
 day6 = 
-[
-	{ name: "Meeting 1", duration: 1.5, type: :onsite },
-	{ name: "Meeting 2", duration: 2.0, type: :onsite },
-	{ name: "Meeting 3", duration: 2.5, type: :offsite },
-	{ name: "Meeting 4", duration: 3, type: :onsite }
-]
+  [
+    { name: "Meeting 1", duration: 1.5, type: :onsite },
+    { name: "Meeting 2", duration: 2.0, type: :onsite },
+    { name: "Meeting 3", duration: 2.5, type: :offsite },
+    { name: "Meeting 4", duration: 3, type: :onsite }
+  ]
 
 day7 = 
-[
-	{ name: "Meeting 1", duration: 1, type: :offsite },
-	{ name: "Meeting 2", duration: 2.5, type: :onsite },
-	{ name: "Meeting 3", duration: 0.5, type: :offsite },
-	{ name: "Meeting 4", duration: 1, type: :onsite },
-	{ name: "Meeting 5", duration: 1.5, type: :offsite }
-]
+  [
+    { name: "Meeting 1", duration: 1, type: :offsite },
+    { name: "Meeting 2", duration: 2.5, type: :onsite },
+    { name: "Meeting 3", duration: 0.5, type: :offsite },
+    { name: "Meeting 4", duration: 1, type: :onsite },
+    { name: "Meeting 5", duration: 1.5, type: :offsite }
+  ]
 
 describe MeetingScheduler do
   it "it should fit meeting day 1" do
