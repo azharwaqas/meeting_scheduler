@@ -55,12 +55,11 @@ day7 =
 	{ name: "Meeting 5", duration: 1.5, type: :offsite }
 ]
 
-@start_time = Time.parse("9:00")
-@end_time = Time.parse("17:00")
-
 describe MeetingScheduler do
   it "it should fit meeting day 1" do
     @meeting = MeetingScheduler.new(@start_time, @end_time)
+    @meeting.start_time = Time.parse("9:00")
+    @meeting.end_time = Time.parse("17:00")
     @meet_day_1 = @meeting.meet(day1)
     expect(@meet_day_1[0]).to eq("Yes, can fit. One possible solution would be:") # first data set in document
     expect(@meet_day_1[1]).to eq("09:00 AM - 12:00 PM Meeting 1")
@@ -71,6 +70,8 @@ describe MeetingScheduler do
 
   it "it should fit meeting day 2" do
     @meeting = MeetingScheduler.new(@start_time, @end_time)
+    @meeting.start_time = Time.parse("9:00")
+    @meeting.end_time = Time.parse("17:00")
     @meet_day_2 = @meeting.meet(day2)
     expect(@meet_day_2[0]).to eq("Yes, can fit. One possible solution would be:") # second data set in document
     expect(@meet_day_2[1]).to eq("09:00 AM - 10:30 AM Meeting 1")
@@ -82,6 +83,8 @@ describe MeetingScheduler do
 
   it "it should fit meeting day 4" do
     @meeting = MeetingScheduler.new(@start_time, @end_time)
+    @meeting.start_time = Time.parse("9:00")
+    @meeting.end_time = Time.parse("17:00")
     @meet_day_4 = @meeting.meet(day4)
     expect(@meet_day_4[0]).to eq("Yes, can fit. One possible solution would be:") # Additional
     expect(@meet_day_4[1]).to eq("09:00 AM - 09:30 AM Meeting 2")
@@ -92,6 +95,8 @@ describe MeetingScheduler do
 
   it "it should fit meeting day 5" do
     @meeting = MeetingScheduler.new(@start_time, @end_time)
+    @meeting.start_time = Time.parse("9:00")
+    @meeting.end_time = Time.parse("17:00")
     @meet_day_5 = @meeting.meet(day5)
     expect(@meet_day_5[0]).to eq("Yes, can fit. One possible solution would be:") # Additional
     expect(@meet_day_5[1]).to eq("09:00 AM - 01:00 PM Meeting 1")
@@ -100,12 +105,16 @@ describe MeetingScheduler do
 
   it "it shouldn't fit meeting day 6" do
     @meeting = MeetingScheduler.new(@start_time, @end_time)
+    @meeting.start_time = Time.parse("9:00")
+    @meeting.end_time = Time.parse("17:00")
     @meet_day_6 = @meeting.meet(day6)
     expect(@meet_day_6.first).to eq("No, Can't fit!") # Additional
   end
 
   it "it should fit meeting day 7" do
     @meeting = MeetingScheduler.new(@start_time, @end_time)
+    @meeting.start_time = Time.parse("9:00")
+    @meeting.end_time = Time.parse("17:00")
     @meet_day_7 = @meeting.meet(day7)
     expect(@meet_day_7[0]).to eq("Yes, can fit. One possible solution would be:") # Additional
     expect(@meet_day_7[1]).to eq("09:00 AM - 11:30 AM Meeting 2")
@@ -117,7 +126,9 @@ describe MeetingScheduler do
 
   it "it shouldn't fit meetings" do
     @meeting = MeetingScheduler.new(@start_time, @end_time)
-  	@meet_day_3 = @meeting.meet(day3)
-  	expect(@meet_day_3.first).to eq("No, Can't fit!") # third data set in document
+    @meeting.start_time = Time.parse("9:00")
+    @meeting.end_time = Time.parse("17:00")
+    @meet_day_3 = @meeting.meet(day3)
+    expect(@meet_day_3.first).to eq("No, Can't fit!") # third data set in document
   end
 end 
