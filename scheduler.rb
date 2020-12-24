@@ -1,22 +1,13 @@
 require 'time'
 class MeetingScheduler
 
+  attr_accessor :start_time, :end_time
+  attr_reader :scheduler
+
   def initialize(start_time, end_time)
     @start_time = start_time
     @end_time = end_time
     @scheduler = []
-  end
-
-  def start_time=(start_time)
-    @start_time = start_time
-  end
-
-  def end_time=(end_time)
-    @end_time = end_time
-  end
-
-  def scheduler
-    @scheduler
   end
 
   def meet(data)
